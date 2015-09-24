@@ -20,9 +20,9 @@ Human Activity Recognition Using Smartphones Dataset.
 
 ## Development Environment
 
-  Windows 7 Home Premium Service Pack 1
-  RStudio Version 0.99.463
-  R version 3.2.1 (64-bit)
+  - Windows 7 Home Premium Service Pack 1
+  - RStudio Version 0.99.463
+  - R version 3.2.1 (64-bit)
 
 
 
