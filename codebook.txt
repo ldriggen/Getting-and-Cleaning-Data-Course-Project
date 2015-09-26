@@ -1,0 +1,133 @@
+==============================
+Project Purpose and Background
+==============================
+The purpose of this project is to create a tidy dataset from specific manipulations of the
+Human Activity Recognition Using Smartphones Dataset. The specific manipulations required are:
+
+	1. Merge the training and the test sets to create one data set.
+        2. Extract only the measurements on the mean and standard deviation for each measurement. 
+        3. Use descriptive activity names to name the activities in the data set
+        4. Appropriately label the data set with descriptive variable names. 
+        5. From the data set in step 4, create a second, independent tidy data set with the average of each variable for each activity and each subject.
+
+The R code to complete the above is to be stored in an R script called run_analysis.R .
+ 
+
+   The dataset with related documentation used as a source for the project can be found at
+    https://d396qusza40orc.cloudfront.net/getdata%2Fprojectfiles%2FUCI%20HAR%20Dataset.zip.
+
+    More information on the Human Activity Recognition Using Smartphones project and can be
+    found at http://archive.ics.uci.edu/ml/datasets/Human+Activity+Recognition+Using+Smartphones 
+
+=========================================================================
+Input data from the Human Activity Recognition Using Smartphones Project
+=========================================================================
+
+There are 8 datasets used as input from the Human Activity Recognition Using Smartphones Project.
+
+	1. subject_test.txt - contains the subject who performed the activities in the test set
+        2. subject_train.txt - contains the subject who performed the activities in the training set
+	3. X_test.txt - contains the feature measurements for the test set (see Features Description section below)
+	4. X_train.txt - contains the feature measurements for the training set (see Features Description section below)
+	5. y_test.txt - contains the labels for the test set
+	6. y_train.txt - contains the labels for the training set
+	7. activity_labels.txt - contains text labels for the activity codes
+	8. features.txt - list of all the features (measurements - see Features Description below
+
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Features Description (taken from the Human Activity Recognition Using Smartphones Project)
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+The features selected for this database come from the accelerometer and gyroscope 3-axial raw signals tAcc-XYZ and tGyro-XYZ. These time domain signals (prefix 't' to denote time) were captured at a constant rate of 50 Hz. Then they were filtered using a median filter and a 3rd order low pass Butterworth filter with a corner frequency of 20 Hz to remove noise. Similarly, the acceleration signal was then separated into body and gravity acceleration signals (tBodyAcc-XYZ and tGravityAcc-XYZ) using another low pass Butterworth filter with a corner frequency of 0.3 Hz. 
+
+Subsequently, the body linear acceleration and angular velocity were derived in time to obtain Jerk signals (tBodyAccJerk-XYZ and tBodyGyroJerk-XYZ). Also the magnitude of these three-dimensional signals were calculated using the Euclidean norm (tBodyAccMag, tGravityAccMag, tBodyAccJerkMag, tBodyGyroMag, tBodyGyroJerkMag). 
+
+Finally a Fast Fourier Transform (FFT) was applied to some of these signals producing fBodyAcc-XYZ, fBodyAccJerk-XYZ, fBodyGyro-XYZ, fBodyAccJerkMag, fBodyGyroMag, fBodyGyroJerkMag. (Note the 'f' to indicate frequency domain signals). 
+
+These signals were used to estimate variables of the feature vector for each pattern:  
+'-XYZ' is used to denote 3-axial signals in the X, Y and Z directions.
+
+tBodyAcc-XYZ
+tGravityAcc-XYZ
+tBodyAccJerk-XYZ
+tBodyGyro-XYZ
+tBodyGyroJerk-XYZ
+tBodyAccMag
+tGravityAccMag
+tBodyAccJerkMag
+tBodyGyroMag
+tBodyGyroJerkMag
+fBodyAcc-XYZ
+fBodyAccJerk-XYZ
+fBodyGyro-XYZ
+fBodyAccMag
+fBodyAccJerkMag
+fBodyGyroMag
+fBodyGyroJerkMag
+
+The set of variables that were estimated from these signals are: 
+
+mean(): Mean value
+std(): Standard deviation
+mad(): Median absolute deviation 
+max(): Largest value in array
+min(): Smallest value in array
+sma(): Signal magnitude area
+energy(): Energy measure. Sum of the squares divided by the number of values. 
+iqr(): Interquartile range 
+entropy(): Signal entropy
+arCoeff(): Autorregresion coefficients with Burg order equal to 4
+correlation(): correlation coefficient between two signals
+maxInds(): index of the frequency component with largest magnitude
+meanFreq(): Weighted average of the frequency components to obtain a mean frequency
+skewness(): skewness of the frequency domain signal 
+kurtosis(): kurtosis of the frequency domain signal 
+bandsEnergy(): Energy of a frequency interval within the 64 bins of the FFT of each window.
+angle(): Angle between to vectors.
+
+Additional vectors obtained by averaging the signals in a signal window sample. These are used on the angle() variable:
+
+gravityMean
+tBodyAccMean
+tBodyAccJerkMean
+tBodyGyroMean
+tBodyGyroJerkMean
+
+
+=============================================================================
+Data Manipulation on the Human Activity Recognition Using Smartphones Project
+=============================================================================
+
+   1. input the subject_test.txt, X_test.txt, and y_text.txt datasets and column bind them together
+   2. input the subject_train.txt, X_train.txt, and y_train.txt datasets and column bind them together
+   3. row bind the results of 1. and 2. above to create a single dataset
+   4. input the features.txt dataset and determine the columns containing means and standard deviations
+   5. subset the result of step 3 to contain only the subject, activity, and the features from step 4.
+   6. add activity description to the result of step 5.
+   7. compute the means for all the features in the result of 7. by subject and activity description.
+   8. turn the dataset in step 7 into a long dataset with each subject, activity description and feature/statistic in its own row.
+   9. split the feature name into three variables, measurement, statistic, and axis (e.g "tBodyAcc-mean()-X" becomes
+      "tBodyAcc", "mean()", and "X".
+   10. write the result of step 9. to tidy.txt
+
+=============================================================================
+Output dataset tidy.txt
+=============================================================================
+
+ The output dataset (tidy.txt) has one row for each subject, activity, and feature containing
+ a mean or standard deviation from the the Human Activity Recognition Using Smartphones Dataset.
+
+ The columns are described below:
+
+     subject - values 1 through 30 inclusive
+     activity - values "LAYING", "SITTING", "STANDING", "WALKING", "WALKING_DOWNSTAIRS", and "WALKING_UPSTAIRS" 
+     measurement - values  "tBodyAcc"  "tGravityAcc" "tBodyAccJerk" "tBodyGyro" "tBodyGyroJerk" "tBodyAccMag"
+ 		  "tGravityAccMag" "tBodyAccJerkMag" "tBodyGyroMag" "tBodyGyroJerkMag" "fBodyAcc" "fBodyAccJerk"
+                  "fBodyGyro" "fBodyAccMag" "fBodyBodyAccJerkMag" "fBodyBodyGyroMag" "fBodyBodyGyroJerkMag"
+     statistic - values "mean()" and "std()"
+     axis - "X", "Y", "Z" and NA
+     mean - average of the values for the subject, activity, measurement, statistic, and axis from the 
+            Human Activity Recognition Using Smartphones Dataset
+
+
